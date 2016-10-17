@@ -31,20 +31,22 @@ odir = 'propionicAcid-ecoli'
 if not odir in os.listdir(thisDir):
     os.mkdir(os.path.join(thisDir,odir))
 
-newdata.to_csv(os.path.join(thisDir,odir,'data.csv'))
-newmeta.to_csv(os.path.join(thisDir,odir,'meta.csv'))
+newdata.to_csv(os.path.join(thisDir,odir,'data.csv'),index=False)
+newmeta.to_csv(os.path.join(thisDir,odir,'meta.csv'),index=False)
 
 # dataset 2
 
 fn = 'Clariostar same across plate E coli BW25113.xlsx'
 data = pd.read_excel(os.path.join(rawDir,fn)).iloc[:,:-2]
+data.columns = ['time'] + range(data.shape[1]-1)
+data.time = 1.*data.time/60
 
 meta = pd.DataFrame(data.columns[1:],columns=['position'])
-data.columns = ['time'] + range(data.shape[1]-1)
+
 
 odir = 'ecoli-replicate'
 if not odir in os.listdir(thisDir):
     os.mkdir(os.path.join(thisDir,odir))
 
-data.to_csv(os.path.join(thisDir,odir,'data.csv'))
-meta.to_csv(os.path.join(thisDir,odir,'meta.csv'))
+data.to_csv(os.path.join(thisDir,odir,'data.csv'),index=False)
+meta.to_csv(os.path.join(thisDir,odir,'meta.csv'),index=False)
