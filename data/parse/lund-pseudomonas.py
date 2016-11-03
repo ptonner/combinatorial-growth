@@ -56,11 +56,11 @@ def parseFile(f,strain=None):
 
 # data,meta = parseFile("data/raw/lund/PA01 Lactic Acid (1).xlsx",strain='PA01')
 # data2,meta2 = parseFile("data/raw/lund/PAB Lactic Acid (1).xlsx",strain='PA1054')
-data,meta = parseFile("data/raw/lund/PA01 Acetic 15 min time points 14.10.16.xlsx",strain='PA01')
-data2,meta2 = parseFile("data/raw/lund/PA01 Acetic 15 min time points 14.10.16.xlsx",strain='PA1054')
 
-data = pd.merge(data,data2,on='time')
-meta = pd.concat((meta,meta2),0)
+# data = pd.merge(data,data2,on='time')
+# meta = pd.concat((meta,meta2),0)
+
+data,meta = parseFile("data/raw/lund/PA01 Acetic 15 min time points 14.10.16.xlsx",strain='PA01')
 
 data.columns = ['time'] + range(data.shape[1]-1)
 data = data.iloc[4:,:]
