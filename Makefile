@@ -5,5 +5,5 @@ NORMDIR := $(DATADIR)/normalized
 
 compress: data.tar.gz
 
-data.tar.gz: $(RAWDIR) #$(NORMDIR)
+data.tar.gz: $(RAWDIR) $(NORMDIR)
 	tar -zcvf data.tar.gz $(RAWDIR) $(NORMDIR)
