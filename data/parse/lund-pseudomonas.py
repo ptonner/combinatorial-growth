@@ -5,14 +5,14 @@ import re
 def parseFile(f,strain=None):
 
 	pa = pd.read_excel(f,sheetname=None)
-	useSheets = [s for s in pa.keys() if re.match('(pH ?[0-9.]+,? [0-7.]+ ?mM)|(All pH 0 mM)',s)]
+	useSheets = [s for s in pa.keys() if re.match('(pH ?[0-9.]+,? [0-7.]+ ?(mM)?)|(All pH 0 mM)',s)]
 
 	data = meta = None
 
 	for s in useSheets:
 		print s
 
-		m = re.match('pH ?([0-9.]+),? ([0-7.]+) ?mM',s)
+		m = re.match('pH ?([0-9.]+),? ([0-7.]+) ?(mM)?',s)
 
 		if m:
 			ph = m.group(1)
@@ -31,10 +31,10 @@ def parseFile(f,strain=None):
 			newmeta['pH'] = [7,6.5,6,5.5,5,4.5,4]
 			newmeta['bio'] = 1
 		else:
-			temp = temp.iloc[:,:4]
+			temp = temp.iloc[:,:7]
 
-			newmeta = pd.DataFrame([[ph,la]]*3,columns=['pH','mM lactic acid'])
-			newmeta['bio'] = [1,2,3]
+			newmeta = pd.DataFrame([[ph,la]]*6,columns=['pH','mM lactic acid'])
+			newmeta['bio'] = range(1,7)
 
 		if not strain is None:
 			newmeta['strain'] = strain
