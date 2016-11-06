@@ -27,14 +27,14 @@ def parseFile(f,strain=None):
 		if ph is None:
 			temp = temp.iloc[:,:8]
 
-			newmeta = pd.DataFrame([[ph,la]]*7,columns=['pH','mM lactic acid'])
+			newmeta = pd.DataFrame([[ph,la]]*7,columns=['pH','mM-acid'])
 			newmeta['pH'] = [7,6.5,6,5.5,5,4.5,4]
-			newmeta['bio'] = 1
+			newmeta['batch'] = 1
 		else:
 			temp = temp.iloc[:,:7]
 
-			newmeta = pd.DataFrame([[ph,la]]*6,columns=['pH','mM lactic acid'])
-			newmeta['bio'] = range(1,7)
+			newmeta = pd.DataFrame([[ph,la]]*6,columns=['pH','mM-acid'])
+			newmeta['batch'] = [0]*3 + [1]*3
 
 		if not strain is None:
 			newmeta['strain'] = strain
@@ -61,6 +61,13 @@ def parseFile(f,strain=None):
 # meta = pd.concat((meta,meta2),0)
 
 data,meta = parseFile("data/raw/lund/PA01 Acetic 15 min time points 14.10.16.xlsx",strain='PA01')
+meta['acid'] = 'acetic'
+
+data2,meta2 = parseFile("data/raw/lund/Propionic acid 15 min time points PA01 02.11.16.xlsx",strain='PA1054')
+meta2['acid'] = 'propionic'
+
+data = pd.merge(data,data2,on='time')
+meta = pd.concat((meta,meta2),0)
 
 data.columns = ['time'] + range(data.shape[1]-1)
 data = data.iloc[4:,:]
@@ -68,6 +75,7 @@ data.to_csv("data/normalized/lund/pseudomonas/data.csv",index=False)
 
 meta.index = range(meta.shape[0])
 meta.to_csv("data/normalized/lund/pseudomonas/meta.csv",index=False)
+
 #
 # data,meta = parseFile("data/raw/Propionic Acid - Fluostar E. coli.xlsx")
 #
