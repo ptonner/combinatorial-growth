@@ -1,0 +1,13 @@
+*.pyc
+.ipynb_checkpoints/
+bin/
+data.tar.gz
+data
+figures
+include/
+lib/
+local/
+man/
+pip-selfcheck.json
+share/
+
