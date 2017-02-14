@@ -1,4 +1,4 @@
-from GPy import RBF
+from GPy.kern import RBF
 import numpy as np
 
 class RBFDerivative(RBF):
