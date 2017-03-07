@@ -38,4 +38,11 @@ data.to_csv(os.path.join('data','normalized',thisDir,'gradientTest-1','data.csv'
 
 fn = '20161010PQ_osmo_key.xlsx'
 meta = pd.read_excel(os.path.join('data','raw',thisDir,fn))
+
+meta['mMPQ'] = meta['mM PQ']
+del meta['mM PQ']
+meta['MNaCl'] = meta['M NaCl']
+del meta['M NaCl']
+del meta['Well']
+
 meta.to_csv(os.path.join('data','normalized',thisDir,'gradientTest-1','meta.csv'),index=False)
